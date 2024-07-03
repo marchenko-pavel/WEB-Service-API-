@@ -9,8 +9,8 @@ public class ElectricMeter
     [Required]
     public string InventoryNumber { get; set; }
     [Required]
-    public int Type { get; set; }
-    [Required]
     public DateOnly Verificated { get; set; }
+    public int TypeId { get; set; }
+    public ElectricMeterType Type { get; set; }
     public MeasuringPoint MeasuringPoint { get; set; }
 }

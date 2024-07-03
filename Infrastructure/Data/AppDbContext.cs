@@ -11,6 +11,7 @@ public class AppDbContext : DbContext
     public DbSet<CalculationMeter> CalculationMeters { get; set; }
     public DbSet<MeasuringPoint> MeasuringPoints { get; set; }
     public DbSet<ElectricMeter> ElectricMeters { get; set; }
+    public DbSet<ElectricMeterType> ElectricMeterTypes { get; set; }
     public DbSet<CurrentTransformer> CurrentTransformers { get; set; }
     public DbSet<CurrentTransformerType> CurrentTransformerTypes { get; set; }
     public DbSet<VoltageTransformer> VoltageTransformers { get; set; }
