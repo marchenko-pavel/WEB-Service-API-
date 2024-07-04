@@ -1,4 +1,6 @@
-﻿using Infrastructure.Data;
+﻿using Infrastructure.DAL;
+using Infrastructure.Data;
+using Infrastructure.Data.Sets;
 using Microsoft.EntityFrameworkCore;
 
 namespace Web
@@ -12,13 +14,16 @@ namespace Web
             services.AddControllers();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+            services.AddTransient<IRepository, Repository>();
+            services.AddSingleton<BdAutoFiller>();
 
             var connectionString = Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             services.AddDbContextFactory<AppDbContext>(options => options.UseNpgsql(connectionString));
         }
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DbContextOptions<AppDbContext> dbContext)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
+            DbContextOptions<AppDbContext> dbContext, BdAutoFiller autoFiller)
         {
-            EnsureDatabase(dbContext);
+            EnsureDatabase(dbContext, autoFiller);
 
             if (env.IsDevelopment())
             {
@@ -37,9 +42,12 @@ namespace Web
                 endpoints.MapControllers();
             });
         }
-        private async Task EnsureDatabase(DbContextOptions<AppDbContext> dbContext)
+        private async Task EnsureDatabase(DbContextOptions<AppDbContext> dbContext, BdAutoFiller autoFiller)
         {
-            using (var db = new AppDbContext(dbContext)) { db.Database.EnsureCreated(); }
+            bool isCreatedBd;
+            using (var db = new AppDbContext(dbContext)) { isCreatedBd = db.Database.EnsureCreated(); }
+
+            if (isCreatedBd && !autoFiller.IsFilledBd) { await autoFiller.FillAsync(); }
         }
     }
 }

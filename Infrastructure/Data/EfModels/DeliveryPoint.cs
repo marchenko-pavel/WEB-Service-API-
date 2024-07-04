@@ -10,5 +10,7 @@ public class DeliveryPoint
     public string Name { get; set; }
     [Required]
     public double MaxPower { get; set; }
+    [Required]
+    public int ConsumptionObjectId { get; set; }
     public CalculationMeter CalculationMeter { get; set; }
 }
