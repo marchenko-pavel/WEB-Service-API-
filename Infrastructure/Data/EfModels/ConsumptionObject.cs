@@ -10,6 +10,8 @@ public class ConsumptionObject
     public string Name { get; set; }
     [Required]
     public string Address { get; set; }
+    [Required]
+    public int OrganizationId { get; set; }
     public ICollection<DeliveryPoint> DeliveryPoints { get; set; }
     public ICollection<MeasuringPoint> MeasuringPoints { get; set; }
 }

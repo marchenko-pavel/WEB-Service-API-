@@ -10,6 +10,8 @@ public class Organization
     public string Name { get; set; }
     [Required]
     public string Address { get; set; }
+    public int? ParentOrgId { get; set; }
+    [ForeignKey("ParentOrgId")]
     public ICollection<Organization> Organizations { get; set; }
     public ICollection<ConsumptionObject> ConsumptionObjects { get; set; }
 }
