@@ -19,5 +19,7 @@ public class Program
             .ConfigureWebHostDefaults(webBuilder =>
             {
                 webBuilder.UseStartup<Startup>();
+                webBuilder.UseKestrel();
+                webBuilder.UseUrls("http://localhost:8050");
             });
 }
