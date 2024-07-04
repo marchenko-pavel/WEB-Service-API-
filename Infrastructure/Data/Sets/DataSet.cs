@@ -83,9 +83,9 @@ public static class DataSet
     public static List<VoltageTransformer> VoltageTransformers = new List<VoltageTransformer>()
     {
         new VoltageTransformer(){ Id = 1, InventoryNumber=$"VT-{firstSeed}-{firstSeed}-{firstSeed}",
-            TypeId=1, Verificated = DateOnly.FromDateTime(DateTime.Now.AddDays(-7)), Kt=7.5 },
+            TypeId=1, Verificated = DateOnly.FromDateTime(new DateTime(2020,12,30,15,0,0)), Kt=7.5 },
         new VoltageTransformer(){ Id = 2, InventoryNumber=$"VT-{secondSeed}-{secondSeed}-{secondSeed}",
-            TypeId=2, Verificated = DateOnly.FromDateTime(DateTime.Now.AddDays(-7)), Kt=9.5 },
+            TypeId=2, Verificated = DateOnly.FromDateTime(new DateTime(2019,06,1,15,0,0)), Kt=9.5 },
         new VoltageTransformer(){ Id = 3, InventoryNumber=$"VT-{thirdSeed}-{thirdSeed}-{thirdSeed}",
             TypeId=1, Verificated = DateOnly.FromDateTime(DateTime.Now.AddDays(-7)), Kt=8.5 },
         new VoltageTransformer(){ Id = 4, InventoryNumber=$"VT-{fourthSeed}-{fourthSeed}-{fourthSeed}",

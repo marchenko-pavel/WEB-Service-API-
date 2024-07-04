@@ -13,6 +13,24 @@ public class EnergyController : ControllerBase
     private const int availableVerificationPeriod = 5;
     public EnergyController(IRepository repository) { _repository = repository; }
 
+    [HttpGet("GetOverdueVoltageTransformer/{consumptionObjectId}")]
+    public async Task<IActionResult> GetOverdueVoltageTransformerAsync(int consumptionObjectId)
+    {
+        DateOnly check = DateOnly.FromDateTime(DateTime.Now.AddYears(-availableVerificationPeriod));
+        try
+        {
+            var measuringPoints = await _repository.GetMeasuringPointsAsync(consumptionObjectId);
+            var overdueVoltageTransformers = measuringPoints
+                .Where(x => x.VoltageTransformer.Verificated <= check)
+                .Select(x => x.ElectricMeter.InventoryNumber).ToList();
+
+            return Ok(overdueVoltageTransformers);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.InnerException?.Message);
+        }
+    }
     [HttpGet("GetOverdueElectricMeter/{consumptionObjectId}")]
     public async Task<IActionResult> GetOverdueElectricMeterAsync(int consumptionObjectId)
     {
