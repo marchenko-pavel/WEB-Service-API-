@@ -10,8 +10,27 @@ namespace Web.Controllers;
 public class EnergyController : ControllerBase
 {
     private readonly IRepository _repository;
+    private const int availableVerificationPeriod = 5;
     public EnergyController(IRepository repository) { _repository = repository; }
 
+    [HttpGet("GetOverdueElectricMeter/{consumptionObjectId}")]
+    public async Task<IActionResult> GetOverdueElectricMeterAsync(int consumptionObjectId)
+    {
+        DateOnly check = DateOnly.FromDateTime(DateTime.Now.AddYears(-availableVerificationPeriod));
+        try
+        {
+            var measuringPoints = await _repository.GetMeasuringPointsAsync(consumptionObjectId);
+            var overdueElectricMeters = measuringPoints
+                .Where(x => x.ElectricMeter.Verificated <= check)
+                .Select(x => x.ElectricMeter.InventoryNumber).ToList();
+
+            return Ok(overdueElectricMeters);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.InnerException?.Message);
+        }
+    }
     [HttpGet("GetCalculationMeter/{year}")]
     public async Task<IActionResult> GetCalculationMeterAsync(int year)
     {

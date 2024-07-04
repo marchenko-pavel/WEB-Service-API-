@@ -57,6 +57,26 @@ public class Repository : IRepository
             }
         }
     }
+    public async Task<List<MeasuringPoint>> GetMeasuringPointsAsync(int consumptionObjectId)
+    {
+        using (var _context = _factory.CreateDbContext())
+        {
+            try
+            {
+                return await _context.MeasuringPoints
+                    .Where(x => x.ConsumptionObjectId == consumptionObjectId)
+                    .Include("ElectricMeter")
+                    .Include("CurrentTransformer")
+                    .Include("VoltageTransformer")
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"При получении точек измерения по ID объэекта потребления '{consumptionObjectId}' из БД произошла ошибка - {ex.Message}");
+                throw;
+            }
+        }
+    }
     public async Task<List<CalculationMeterPlugIn>> GetCalculationMeterPlugInsAsync()
     {
         using (var _context = _factory.CreateDbContext())

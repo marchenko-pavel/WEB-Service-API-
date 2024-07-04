@@ -54,20 +54,20 @@ public static class DataSet
     public static List<MeasuringPoint> MeasuringPoints = new List<MeasuringPoint>()
     {
         new MeasuringPoint(){ Name = "Точка измерения 1", ConsumptionObjectId = 3 },
-        new MeasuringPoint(){ Name = "Точка измерения 2", ConsumptionObjectId = 4 },
-        new MeasuringPoint(){ Name = "Точка измерения 3", ConsumptionObjectId = 3 },
+        new MeasuringPoint(){ Name = "Точка измерения 2", ConsumptionObjectId = 3 },
+        new MeasuringPoint(){ Name = "Точка измерения 3", ConsumptionObjectId = 4 },
         new MeasuringPoint(){ Name = "Точка измерения 4" , ConsumptionObjectId = 4}
     };
     public static List<ElectricMeter> ElectricMeters = new List<ElectricMeter>()
     {
         new ElectricMeter(){Id = 1, InventoryNumber = $"EM-{firstSeed}-{firstSeed}-{firstSeed}",
-            TypeId = 1, Verificated = DateOnly.FromDateTime(DateTime.Now.AddDays(-7))},
+            TypeId = 1, Verificated = DateOnly.FromDateTime(new DateTime(2019,06,1,15,0,0))},
         new ElectricMeter(){Id = 2, InventoryNumber = $"EM-{secondSeed}-{secondSeed}-{secondSeed}",
-            TypeId = 2, Verificated = DateOnly.FromDateTime(DateTime.Now.AddDays(-7))},
+            TypeId = 1, Verificated = DateOnly.FromDateTime(new DateTime(2020,12,30,15,0,0))},
         new ElectricMeter(){Id = 3, InventoryNumber = $"EM-{thirdSeed}-{thirdSeed}-{thirdSeed}",
-            TypeId = 1, Verificated = DateOnly.FromDateTime(DateTime.Now.AddDays(-7))},
+            TypeId = 2, Verificated = DateOnly.FromDateTime(DateTime.Now.AddDays(-7))},
         new ElectricMeter(){Id = 4, InventoryNumber = $"EM-{fourthSeed}-{fourthSeed}-{fourthSeed}",
-            TypeId = 2, Verificated = DateOnly.FromDateTime(DateTime.Now.AddDays(-7))}
+            TypeId = 1, Verificated = DateOnly.FromDateTime(DateTime.Now.AddDays(-7))}
     };
     public static List<CurrentTransformer> CurrentTransformers = new List<CurrentTransformer>()
     {
