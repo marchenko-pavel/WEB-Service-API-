@@ -72,9 +72,9 @@ public static class DataSet
     public static List<CurrentTransformer> CurrentTransformers = new List<CurrentTransformer>()
     {
         new CurrentTransformer(){ Id = 1, InventoryNumber=$"CT-{firstSeed}-{firstSeed}-{firstSeed}",
-            TypeId=1, Verificated = DateOnly.FromDateTime(DateTime.Now.AddDays(-7)), Kt=7.5 },
+            TypeId=1, Verificated = DateOnly.FromDateTime(new DateTime(2020,12,30,15,0,0)), Kt=7.5 },
         new CurrentTransformer(){ Id = 2, InventoryNumber=$"CT-{secondSeed}-{secondSeed}-{secondSeed}",
-            TypeId=2, Verificated = DateOnly.FromDateTime(DateTime.Now.AddDays(-7)), Kt=9.5 },
+            TypeId=2, Verificated = DateOnly.FromDateTime(new DateTime(2019,06,1,15,0,0)), Kt=9.5 },
         new CurrentTransformer(){ Id = 3, InventoryNumber=$"CT-{thirdSeed}-{thirdSeed}-{thirdSeed}",
             TypeId=3, Verificated = DateOnly.FromDateTime(DateTime.Now.AddDays(-7)), Kt=8.5 },
         new CurrentTransformer(){ Id = 4, InventoryNumber=$"CT-{fourthSeed}-{fourthSeed}-{fourthSeed}",

@@ -13,6 +13,24 @@ public class EnergyController : ControllerBase
     private const int availableVerificationPeriod = 5;
     public EnergyController(IRepository repository) { _repository = repository; }
 
+    [HttpGet("GetOverdueCurrentTransformer/{consumptionObjectId}")]
+    public async Task<IActionResult> GetOverdueCurrentTransformerAsync(int consumptionObjectId)
+    {
+        DateOnly check = DateOnly.FromDateTime(DateTime.Now.AddYears(-availableVerificationPeriod));
+        try
+        {
+            var measuringPoints = await _repository.GetMeasuringPointsAsync(consumptionObjectId);
+            var overdueCurrentTransformers = measuringPoints
+                .Where(x => x.CurrentTransformer.Verificated <= check)
+                .Select(x => x.CurrentTransformer.InventoryNumber).ToList();
+
+            return Ok(overdueCurrentTransformers);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.InnerException?.Message);
+        }
+    }
     [HttpGet("GetOverdueVoltageTransformer/{consumptionObjectId}")]
     public async Task<IActionResult> GetOverdueVoltageTransformerAsync(int consumptionObjectId)
     {
@@ -22,7 +40,7 @@ public class EnergyController : ControllerBase
             var measuringPoints = await _repository.GetMeasuringPointsAsync(consumptionObjectId);
             var overdueVoltageTransformers = measuringPoints
                 .Where(x => x.VoltageTransformer.Verificated <= check)
-                .Select(x => x.ElectricMeter.InventoryNumber).ToList();
+                .Select(x => x.VoltageTransformer.InventoryNumber).ToList();
 
             return Ok(overdueVoltageTransformers);
         }
