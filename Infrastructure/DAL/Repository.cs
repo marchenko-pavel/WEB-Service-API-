@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Data;
+using Infrastructure.Data.EfModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -28,11 +29,33 @@ public class Repository : IRepository
                 {
                     _context.ChangeTracker.Clear();
                     _logger.LogError($"При добавлении в БД объекта класса '{obj.ToString()}' произошла ошибка - {ex.Message}");
-                    return false;
+                    throw;
                 }
             }
         }
         else return false;
+    }
+    public async Task<MeasuringPoint?> GetMeasuringPointAsync(string name)
+    {
+        using (var _context = _factory.CreateDbContext())
+        {
+            try
+            {
+                return await _context.MeasuringPoints
+                    .Where(x => x.Name == name)
+                    .Select(x => new MeasuringPoint
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                        ConsumptionObjectId = x.ConsumptionObjectId
+                    }).SingleOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"При получении точки измерения '{name}' из БД произошла ошибка - {ex.Message}");
+                throw;
+            }
+        }
     }
     private async Task DeleteAsync<TEntity>(TEntity entity) where TEntity : class
     {
