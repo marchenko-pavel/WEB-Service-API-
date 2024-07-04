@@ -17,6 +17,7 @@ public class AppDbContext : DbContext
     public DbSet<CurrentTransformerType> CurrentTransformerTypes { get; set; }
     public DbSet<VoltageTransformer> VoltageTransformers { get; set; }
     public DbSet<VoltageTransformerType> VoltageTransformerTypes { get; set; }
+    public DbSet<CalculationMeterPlugIn> CalculationMeterPlugIns { get; set; }
     protected override async void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<ElectricMeter>().HasOne(x => x.MeasuringPoint).WithOne(x => x.ElectricMeter)
@@ -29,6 +30,8 @@ public class AppDbContext : DbContext
             .HasForeignKey<CalculationMeter>(x => x.Id).IsRequired();
         modelBuilder.Entity<CalculationMeter>().HasMany(x => x.MeasuringPoints).WithMany(y => y.CalculationMeters)
             .UsingEntity<CalculationMeterPlugIn>();
+        modelBuilder.Entity<CalculationMeterPlugIn>()
+            .HasKey(x => new { x.MeasuringPointId, x.CalculationMeterId, x.PlugedIn });
         modelBuilder.Entity<Organization>().HasIndex(x => x.Name).IsUnique();
         modelBuilder.Entity<ConsumptionObject>().HasIndex(x => x.Name).IsUnique();
         modelBuilder.Entity<DeliveryPoint>().HasIndex(x => x.Name).IsUnique();

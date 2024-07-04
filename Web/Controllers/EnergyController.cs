@@ -12,6 +12,23 @@ public class EnergyController : ControllerBase
     private readonly IRepository _repository;
     public EnergyController(IRepository repository) { _repository = repository; }
 
+    [HttpGet("GetCalculationMeter/{year}")]
+    public async Task<IActionResult> GetCalculationMeterAsync(int year)
+    {
+        try
+        {
+            var plugIns = await _repository.GetCalculationMeterPlugInsAsync();
+            var result = plugIns
+                .Where(x => x.PlugedIn.Year <= year && (x.PlugedOut is null || x.PlugedOut.Value.Year >= year))
+                .Select(x => x.CalculationMeterId).ToList();
+
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.InnerException?.Message);
+        }
+    }
     [HttpPost("AddMeasuringPoint")]
     public async Task<IActionResult> AddMeasuringPointAsync([FromBody] MeasuringPointModel body)
     {

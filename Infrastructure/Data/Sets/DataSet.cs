@@ -23,13 +23,17 @@ public static class DataSet
     };
     public static List<DeliveryPoint> DeliveryPoints = new List<DeliveryPoint>()
     {
-        new DeliveryPoint(){ Name = "Точка учета 1", MaxPower = 10, ConsumptionObjectId = 1},
-        new DeliveryPoint(){ Name = "Точка учета 2", MaxPower = 10, ConsumptionObjectId = 2}
+        new DeliveryPoint(){ Name = "Точка учета 1", MaxPower = 10, ConsumptionObjectId = 3},
+        new DeliveryPoint(){ Name = "Точка учета 2", MaxPower = 10, ConsumptionObjectId = 3},
+        new DeliveryPoint(){ Name = "Точка учета 3", MaxPower = 10, ConsumptionObjectId = 4},
+        new DeliveryPoint(){ Name = "Точка учета 4", MaxPower = 10, ConsumptionObjectId = 4}
     };
     public static List<CalculationMeter> CalculationMeters = new List<CalculationMeter>()
     {
         new CalculationMeter() { Id = 1},
-        new CalculationMeter() { Id = 2}
+        new CalculationMeter() { Id = 2},
+        new CalculationMeter() { Id = 3},
+        new CalculationMeter() { Id = 4}
     };
     public static List<ElectricMeterType> ElectricMeterTypes = new List<ElectricMeterType>()
     {
@@ -89,6 +93,15 @@ public static class DataSet
     };
     public static List<CalculationMeterPlugIn> CalculationMeterPlugIns = new List<CalculationMeterPlugIn>()
     {
-        new CalculationMeterPlugIn(){MeasuringPointId = 1, CalculationMeterId = 2, PlugedIn = DateTime.Now}
+        new CalculationMeterPlugIn(){MeasuringPointId = 1, CalculationMeterId = 1,
+            PlugedIn = new DateTime(2018,6,1,15,0,0)},
+        new CalculationMeterPlugIn(){MeasuringPointId = 1, CalculationMeterId = 2,
+            PlugedIn = new DateTime(2019,6,1,15,0,0)},
+        new CalculationMeterPlugIn(){MeasuringPointId = 1, CalculationMeterId = 3,
+            PlugedIn = new DateTime(2017,6,1,15,0,0), PlugedOut = new DateTime(2017,12,30,15,0,0)},
+        new CalculationMeterPlugIn(){MeasuringPointId = 1, CalculationMeterId = 2,
+            PlugedIn = new DateTime(2017,6,1,15,0,0), PlugedOut = new DateTime(2018,12,30,15,0,0)},
+        new CalculationMeterPlugIn(){MeasuringPointId = 1, CalculationMeterId = 4,
+            PlugedIn = new DateTime(2017,6,1,15,0,0), PlugedOut= new DateTime(2019,6,1,15,0,0)}
     };
 }

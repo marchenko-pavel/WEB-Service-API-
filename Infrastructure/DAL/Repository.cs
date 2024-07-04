@@ -57,6 +57,21 @@ public class Repository : IRepository
             }
         }
     }
+    public async Task<List<CalculationMeterPlugIn>> GetCalculationMeterPlugInsAsync()
+    {
+        using (var _context = _factory.CreateDbContext())
+        {
+            try
+            {
+                return await _context.CalculationMeterPlugIns.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"При получении подключений расчетных приборов из БД произошла ошибка - {ex.Message}");
+                throw;
+            }
+        }
+    }
     private async Task DeleteAsync<TEntity>(TEntity entity) where TEntity : class
     {
         using (var _context = _factory.CreateDbContext())
