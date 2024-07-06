@@ -13,7 +13,6 @@ public class BdAutoFiller
         await FillOrgsAsync();
         await FillConsumptionObjectsAsync();
         await FillDeliveryPointsAsync();
-        await FillCalculationMeterAsync();
         await FillMeasuringTypesAsync();
         await FillMeasuringPointAsync();
         await FillCalculationMeterPlugInAsync();
@@ -32,25 +31,16 @@ public class BdAutoFiller
     {
         foreach (var deliveryPoint in DataSet.DeliveryPoints) { await _repository.AddObjectAsync<DeliveryPoint>(deliveryPoint); }
     }
-    private async Task FillCalculationMeterAsync()
-    {
-        foreach (var meter in DataSet.CalculationMeters) { await _repository.AddObjectAsync<CalculationMeter>(meter); }
-    }
     private async Task FillMeasuringTypesAsync()
     {
         foreach (var type in DataSet.ElectricMeterTypes) { await _repository.AddObjectAsync<ElectricMeterType>(type); }
         foreach (var type in DataSet.CurrentTransformerTypes) { await _repository.AddObjectAsync<CurrentTransformerType>(type); }
         foreach (var type in DataSet.VoltageTransformerTypes) { await _repository.AddObjectAsync<VoltageTransformerType>(type); }
     }
-
     private async Task FillMeasuringPointAsync()
     {
         foreach (var point in DataSet.MeasuringPoints) { await _repository.AddObjectAsync<MeasuringPoint>(point); }
-        foreach (var elMeter in DataSet.ElectricMeters) { await _repository.AddObjectAsync<ElectricMeter>(elMeter); }
-        foreach (var transformer in DataSet.CurrentTransformers) { await _repository.AddObjectAsync<CurrentTransformer>(transformer); }
-        foreach (var transformer in DataSet.VoltageTransformers) { await _repository.AddObjectAsync<VoltageTransformer>(transformer); }
     }
-
     private async Task FillCalculationMeterPlugInAsync()
     {
         foreach (var plugIn in DataSet.CalculationMeterPlugIns) { await _repository.AddObjectAsync<CalculationMeterPlugIn>(plugIn); }
